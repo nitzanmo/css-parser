@@ -1,5 +1,7 @@
 # css-parser
 
+Allows translation between classic css syntax to object styled CSS
+
 ## Project setup
 ```
 yarn install

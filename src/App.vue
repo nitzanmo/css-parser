@@ -1,17 +1,16 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <CssParser/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import CssParser from './components/CssParser.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    CssParser
   }
 }
 </script>
@@ -22,7 +21,20 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #c2c2c2d4;
+  background: #101010e6;
+  height: 100%;
+  width: 100%;
+}
+
+html {
+  background: #101010e6;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  height: 100%;
+  overflow-y: hidden;
 }
 </style>
