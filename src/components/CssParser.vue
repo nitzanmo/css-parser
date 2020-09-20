@@ -6,6 +6,7 @@
           Classic Css Syntax
         </h1>
         <b-form-textarea :class="['css-input']" v-model="classicCss"
+                         @keydown.tab.prevent="tabber($event, true)"
                          placeholder="div { background: red; max-width: 40px;..."/>
       </div>
       <div class="input-container">
@@ -13,6 +14,7 @@
           Object Css Syntax
         </h1>
         <b-form-textarea :class="['css-input']" v-model="objectCss"
+                         @keydown.tab.prevent="tabber($event, false)"
                          placeholder="className: {  backgroundColor: 'red', maxWidth: 40,..."/>
       </div>
     </div>
@@ -31,30 +33,30 @@ export default {
   data() {
     return {
       classicCss: ".b-icon.bi {\n" +
-          "    display: inline-block;\n" +
-          "    overflow: visible;\n" +
-          "    vertical-align: -0.15em;\n" +
-          "    width: 20px;\n" +
+          "\tdisplay: inline-block;\n" +
+          "\toverflow: visible;\n" +
+          "\tvertical-align: -0.15em;\n" +
+          "\twidth: 20px;\n" +
           "}",
       objectCss: "",
       fromClassic: sessionStorage.getItem('fromClassic') ? sessionStorage.getItem('fromClassic') === "True" : true,
     }
   },
   methods: {
-    handleDirectionChange: function () {
+    handleDirectionChange() {
       sessionStorage.setItem('fromClassic', this.fromClassic ? 'False' : 'True');
       this.fromClassic = !this.fromClassic;
     },
-    isSinglePixelValue: function (css, index) {
+    isSinglePixelValue(css, index) {
       const endOfLineIndex = css.indexOf(';', index);
       // Checks if the line ends with px, and there is only one px
       return endOfLineIndex !== -1 && css.substr(endOfLineIndex - 2, 2) === 'px' &&
-          css.substr(index + 1, endOfLineIndex).match(/px/g).length === 1;
+          css.substr(index + 1, endOfLineIndex - index - 1).match(/px/g).length === 1;
     },
-    isNumeric: function (n) {
+    isNumeric(n) {
       return !isNaN(parseFloat(n)) && isFinite(n);
     },
-    convert: function () {
+    convert() {
       if (this.fromClassic) {
         let objectCss = '';
         for (let i = 0; i < this.classicCss.length; i++) {
@@ -79,7 +81,7 @@ export default {
             } else {
               // width:20px
               if ((this.isNumeric(nextChar) || nextChar === '-') && this.isSinglePixelValue(this.classicCss, i)) {
-                objectCss += ' ' + this.classicCss.substr(i + 1, endOfLineIndex - 1 - i);
+                objectCss += ' ' + this.classicCss.substr(i + 1, endOfLineIndex - 3 - i);
                 i = endOfLineIndex - 1;
               } else {
                 // color:red -> color: 'red'
@@ -95,7 +97,7 @@ export default {
             // width: 20px
             if (previousChar === ':') {
               if (this.isNumeric(nextChar) && this.isSinglePixelValue(this.classicCss, i)) {
-                objectCss += ' ' + this.classicCss.substr(i + 1, endOfLineIndex - 1 - i);
+                objectCss += ' ' + this.classicCss.substr(i + 1, endOfLineIndex - 3 - i);
                 i = endOfLineIndex - 1;
               } else {
                 // color: red -> color: 'red'
@@ -120,7 +122,17 @@ export default {
       } else {
         // Logic here
       }
-    }
+    },
+    tabber(event, isClassic) {
+      const text = isClassic ? this.classicCss : this.objectCss,
+          originalSelectionStart = event.target.selectionStart,
+          textStart = text.slice(0, originalSelectionStart),
+          textEnd = text.slice(originalSelectionStart),
+          textWithTab = `${textStart}\t${textEnd}`;
+      isClassic ? this.classicCss = textWithTab : this.objectCss = textWithTab;
+      event.target.value = textWithTab // required to make the cursor stay in place.
+      event.target.selectionEnd = event.target.selectionStart = originalSelectionStart + 1
+    },
   },
 }
 </script>
