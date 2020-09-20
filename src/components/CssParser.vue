@@ -131,12 +131,13 @@ export default {
 .inputs {
   display: flex;
   justify-content: space-evenly;
-  height: 65%;
+  height: 75%;
 }
 
 .css-input {
-  height: 450px;
+  height: 400px;
   width: 450px;
+  max-height: 400px;
 }
 
 .input-container {
@@ -168,8 +169,8 @@ export default {
 .buttons {
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
-  height: 25%;
+  justify-content: space-between;
+  height: 15%;
   align-items: center;
 }
 
