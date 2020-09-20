@@ -109,16 +109,12 @@ export default {
             } else if (nextChar === '{') {
               objectCss += ': ';
             }
-            // } else if (char === '{') {
-            //   objectCss += ': ';
           } else {
             objectCss += char;
           }
         }
         
         this.objectCss = objectCss;
-        // eslint-disable-next-line no-debugger
-        debugger
       } else {
         // Logic here
       }
