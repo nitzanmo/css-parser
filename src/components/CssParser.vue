@@ -39,12 +39,7 @@ export default {
   data() {
     return {
       classicCss: "",
-      objectCss: "className: {\n" +
-          "\twidth: 20,\n" +
-          "\theight:20,\n" +
-          "\tbackgroundColor: 'red',\n" +
-          "\toverflowY: 'hidden'\n" +
-          "}",
+      objectCss: "",
       fromClassic: sessionStorage.getItem('fromClassic') ? sessionStorage.getItem('fromClassic') === "True" : true,
     }
   },
@@ -123,18 +118,6 @@ export default {
     },
     convertFromObject() {
       let classicCss = '';
-      // className: {
-      //    width: 20 -> width: 20px,
-      //    height:20,
-      //    backgroundColor: 'red',
-      //    overflowY: 'hidden'
-      // },<\n>
-      // className: {
-      //    width: 20,
-      //    height:20,
-      //    backgroundColor: 'red',
-      //    overflowY: 'hidden'
-      // },
       for (let i = 0; i < this.objectCss.length; i++) {
         const previousChar = this.objectCss[i - 1];
         const nextChar = this.objectCss[i + 1];
