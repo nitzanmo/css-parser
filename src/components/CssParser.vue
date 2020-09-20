@@ -23,7 +23,8 @@
           @click="handleDirectionChange"
           :class="[fromClassic ? 'arrow' : 'arrow-inverted']"/>
       <span id="disabled-wrapper">
-        <b-button variant="primary" @click="convert" :disabled="!fromClassic">
+        <b-button variant="primary" @click="convert"
+                  :disabled="!fromClassic || (fromClassic && classicCss === '' || !fromClassic && objectCss === '')">
           Convert
         </b-button>
         <b-tooltip target="disabled-wrapper" v-if="!fromClassic">Coming Soon</b-tooltip>
