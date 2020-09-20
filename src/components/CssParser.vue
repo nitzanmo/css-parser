@@ -22,7 +22,12 @@
       <b-icon-arrow-right
           @click="handleDirectionChange"
           :class="[fromClassic ? 'arrow' : 'arrow-inverted']"/>
-      <b-button variant="primary" @click="convert">Convert</b-button>
+      <span id="disabled-wrapper">
+        <b-button variant="primary" @click="convert" :disabled="!fromClassic">
+          Convert
+        </b-button>
+        <b-tooltip target="disabled-wrapper" v-if="!fromClassic">Coming Soon</b-tooltip>
+      </span>
     </div>
   </div>
 </template>
@@ -32,12 +37,7 @@ export default {
   name: 'CssParser',
   data() {
     return {
-      classicCss: ".b-icon.bi {\n" +
-          "\tdisplay: inline-block;\n" +
-          "\toverflow: visible;\n" +
-          "\tvertical-align: -0.15em;\n" +
-          "\twidth: 20px;\n" +
-          "}",
+      classicCss: "",
       objectCss: "",
       fromClassic: sessionStorage.getItem('fromClassic') ? sessionStorage.getItem('fromClassic') === "True" : true,
     }
@@ -143,7 +143,7 @@ export default {
 .inputs {
   display: flex;
   justify-content: space-evenly;
-  height: 75%;
+  height: 65%;
 }
 
 .css-input {
